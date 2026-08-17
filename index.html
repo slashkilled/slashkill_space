@@ -14,8 +14,10 @@
             --bg-color: #0c0c0c;
             --text-primary: #d4d4d4;
             --text-muted: rgba(212, 212, 212, 0.5);
-            --divider: rgba(255, 255, 255, 0.25);
-            --hover-glow: #ffffff;
+            --accent-gray: rgba(255, 255, 255, 0.1);
+            --divider: rgba(255, 255, 255, 0.15);
+            --hover-glow: rgba(255, 255, 255, 0.95);
+            --grid-size: 60px;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -27,8 +29,18 @@
             height: 100vh;
             width: 100vw;
             overflow: hidden;
-            display: flex;
+            position: relative;
             -webkit-font-smoothing: antialiased;
+        }
+
+        /* --- ФОН: ПАТТЕРН СИМВОЛОВ @ --- */
+        .bg-pattern {
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            pointer-events: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Ctext x='0' y='11' font-family='monospace' font-size='11' fill='%23ffffff' fill-opacity='0.07'%3E@%3C/text%3E%3C/svg%3E");
+            background-repeat: repeat;
         }
 
         /* --- ЛОГОТИП --- */
@@ -41,13 +53,23 @@
             font-weight: 700;
             text-decoration: none;
             color: var(--text-primary);
-            z-index: 100;
+            z-index: 10;
             line-height: 1;
             transition: color 0.3s ease;
         }
-        .logo:hover { color: var(--hover-glow); }
 
-        /* --- ПАНЕЛИ --- */
+        .logo:hover {
+            color: var(--hover-glow);
+        }
+
+        /* --- СПЛИТ-ЭКРАН --- */
+        .split {
+            display: flex;
+            flex-direction: row;
+            height: 100%;
+            width: 100%;
+        }
+
         .panel {
             flex: 1;
             display: flex;
@@ -57,102 +79,65 @@
             text-align: center;
             text-decoration: none;
             color: var(--text-primary);
+            padding: 2rem;
             position: relative;
-            overflow: hidden;
             transition: background-color 0.6s ease;
         }
 
-        /* --- ФОН С СИМВОЛАМИ @ ВНУТРИ ПАНЕЛЕЙ (СИММЕТРИЧНЫЙ) --- */
-        .panel-bg {
-            position: absolute;
-            /* Используем точное позиционирование, чтобы символы @ были симметричны */
-            top: 0; left: 0; right: 0; bottom: 0;
-            z-index: 0;
-            pointer-events: none;
-            opacity: 0.5;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Ctext x='0' y='12' font-family='monospace' font-size='12' fill='%23ffffff' fill-opacity='0.08'%3E@%3C/text%3E%3C/svg%3E");
-            background-repeat: repeat;
-            background-position: 0 0;
-            will-change: transform;
-            transition: transform 0.6s ease-out;
-        }
-
-        .panel-content {
-            position: relative;
-            z-index: 10;
-            padding: 2rem;
-        }
-
-        .panel-title {
-            font-size: clamp(1.5rem, 3vw, 2.2rem);
-            font-weight: 700;
-            margin-bottom: 0.6rem;
-            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-                        color 0.4s ease,
-                        letter-spacing 0.4s ease;
-        }
-
-        .panel-subtitle {
-            font-size: clamp(0.7rem, 1.2vw, 0.85rem);
-            color: var(--text-muted);
-            transition: color 0.4s ease;
-        }
-
-        /* --- ЛИНИЯ РАЗДЕЛИТЕЛЬ (ПК) --- */
-        .panel.left::after {
+        /* Тонкий вертикальный разделитель */
+        .panel:first-child::after {
             content: '';
             position: absolute;
             right: 0;
             top: 15%;
             height: 70%;
             width: 1px;
-            background-color: var(--divider);
-            z-index: 20;
-            pointer-events: none;
+            background: var(--divider);
+            transition: opacity 0.4s ease;
         }
 
-        /* --- HOVER ЭФФЕКТЫ --- */
+        .panel-title {
+            font-size: clamp(1.5rem, 3vw, 2.2rem);
+            font-weight: 700;
+            margin-bottom: 0.6rem;
+            transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                        color 0.4s ease,
+                        letter-spacing 0.5s ease;
+        }
+
+        .panel-subtitle {
+            font-size: clamp(0.7rem, 1.2vw, 0.85rem);
+            color: var(--text-muted);
+            font-weight: 400;
+            transition: color 0.4s ease, opacity 0.4s ease;
+        }
+
+        /* Ховер-эффекты */
         .panel:hover {
-            background-color: rgba(255, 255, 255, 0.03);
-        }
-
-        .panel:hover .panel-bg {
-            animation: bg-drift 5s ease-in-out infinite alternate;
+            background-color: rgba(255, 255, 255, 0.02);
         }
 
         .panel:hover .panel-title {
-            transform: scale(1.07);
-            letter-spacing: 2px;
+            transform: scale(1.05);
+            letter-spacing: 1.5px;
             color: var(--hover-glow);
-            animation: text-tremor 0.8s ease-in-out infinite;
         }
 
         .panel:hover .panel-subtitle {
             color: var(--text-primary);
         }
 
-        /* --- АНИМАЦИИ --- */
-        @keyframes bg-drift {
-            0%   { transform: translate(0, 0); }
-            20%  { transform: translate(-6px, 4px); }
-            40%  { transform: translate(4px, -6px); }
-            60%  { transform: translate(-4px, -3px); }
-            80%  { transform: translate(5px, 5px); }
-            100% { transform: translate(-3px, 6px); }
+        .panel:hover::after {
+            opacity: 0.3;
         }
 
-        @keyframes text-tremor {
-            0%, 100% { transform: scale(1.07) translate(0, 0); }
-            25%      { transform: scale(1.07) translate(1px, -1px); }
-            50%      { transform: scale(1.07) translate(-1px, 1px); }
-            75%      { transform: scale(1.07) translate(1px, 0.5px); }
-        }
-
-        /* --- МОБИЛЬНАЯ ВЕРСИЯ --- */
+        /* --- АДАПТИВ: МОБИЛЬНЫЕ --- */
         @media (max-width: 768px) {
-            body { flex-direction: column; }
-            
-            .panel.left::after {
+            .split {
+                flex-direction: column;
+            }
+
+            .panel:first-child::after {
                 right: auto;
                 top: auto;
                 bottom: 0;
@@ -160,32 +145,31 @@
                 width: 70%;
                 height: 1px;
             }
-            
-            .logo { padding: 1.5rem 1.75rem; font-size: 1.4rem; }
+
+            .logo {
+                padding: 1.5rem 1.75rem;
+                font-size: 1.4rem;
+            }
         }
     </style>
 </head>
 <body>
 
+    <div class="bg-pattern"></div>
+
     <a href="/" class="logo">slashkill</a>
 
-    <!-- Левая панель -->
-    <a href="/shitposting/" class="panel left">
-        <div class="panel-bg"></div>
-        <div class="panel-content">
+    <main class="split">
+        <a href="/shitposting/" class="panel">
             <h1 class="panel-title">shitposting</h1>
             <p class="panel-subtitle">(псиопы и тейки)</p>
-        </div>
-    </a>
+        </a>
 
-    <!-- Правая панель -->
-    <a href="/music/" class="panel right">
-        <div class="panel-bg"></div>
-        <div class="panel-content">
+        <a href="/music/" class="panel">
             <h1 class="panel-title">music</h1>
             <p class="panel-subtitle">(строки из песен и музыка)</p>
-        </div>
-    </a>
+        </a>
+    </main>
 
 </body>
 </html>
