@@ -15,8 +15,7 @@
             --text-primary: #d4d4d4;
             --text-muted: rgba(212, 212, 212, 0.4);
             --accent-gray: rgba(255, 255, 255, 0.1);
-            --divider: rgba(255, 255, 255, 0.15);
-            --post-bg: rgba(255, 255, 255, 0.02);
+            --divider: rgba(255, 255, 255, 0.2);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -25,14 +24,14 @@
             background-color: var(--bg-color);
             color: var(--text-primary);
             font-family: 'JetBrains Mono', monospace;
-            height: 100vh;
+            min-height: 100vh;
             width: 100vw;
             overflow-x: hidden;
             position: relative;
             -webkit-font-smoothing: antialiased;
         }
 
-        /* --- ЛОГОТИП (НЕ НАСЛАИВАЕТСЯ НА АНИМАЦИЮ) --- */
+        /* --- ЛОГОТИП --- */
         .logo {
             position: absolute;
             top: 0;
@@ -45,47 +44,21 @@
             z-index: 100;
             line-height: 1;
             transition: color 0.3s ease;
-            pointer-events: auto;
         }
-        .logo:hover { color: var(--text-primary); }
+        .logo:hover { color: #ffffff; }
 
-        /* --- ШАПКА С ЛОГОТИПОМ --- */
-        .header {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            padding: 2rem 2.5rem;
-            z-index: 10;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .section-title {
-            font-size: 2rem;
-            font-weight: 700;
-            text-align: center;
-            margin-bottom: 0.5rem;
-        }
-
-        .section-subtitle {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        /* --- ТЕТРАЖНОЕ ПОЛЕ (АДАПТИВНОЕ) --- */
+        /* --- АДАПТИВНОЕ ТЕТРАЖНОЕ ПОЛЕ (СЛЕВА) --- */
         .field-left {
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
-            width: 100px;
-            height: 100%;
-            z-index: 1;
+            width: 120px;
+            height: 100vh;
+            z-index: 10;
             pointer-events: none;
             overflow: hidden;
+            border-right: 1px solid var(--divider);
+            background-color: var(--bg-color);
         }
 
         .field-bg {
@@ -100,24 +73,42 @@
             will-change: transform;
         }
 
+        /* --- ШАПКА И СЕТКА С УГОЛКОМ --- */
+        .page-header {
+            margin-left: 120px;
+            padding: 3rem 3rem 2rem 3rem;
+            border-bottom: 1px solid var(--divider);
+            text-align: center;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            letter-spacing: 1px;
+        }
+
+        .section-subtitle {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
         /* --- ОСНОВНОЙ КОНТЕНТ --- */
         .content {
+            margin-left: 120px;
+            padding: 3rem;
+            max-width: 800px;
             position: relative;
-            margin-top: 80px;
-            margin-left: 100px;
-            margin-right: 2rem;
-            max-width: 600px;
             z-index: 2;
         }
 
         .post {
-            margin-bottom: 2rem;
-            padding-bottom: 1.5rem;
-            border-bottom: 1px dashed var(--accent-gray);
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
             position: relative;
         }
 
-        /* --- ФОНОВАЯ РАЗЛИНОВКА ПОСТА --- */
+        /* Фоновая разлиновка под каждым постом _ _ _ _ */
         .post::after {
             content: "";
             position: absolute;
@@ -127,54 +118,60 @@
             height: 1px;
             background: repeating-linear-gradient(
                 to right,
-                var(--accent-gray) 0px,
-                var(--accent-gray) 10px,
-                transparent 10px,
-                transparent 20px
+                var(--text-muted) 0px,
+                var(--text-muted) 6px,
+                transparent 6px,
+                transparent 16px
             );
-            opacity: 0.3;
+            opacity: 0.25;
         }
 
         .post-date {
             font-size: 0.9rem;
             color: var(--text-muted);
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.8rem;
         }
 
         .post-content {
-            line-height: 1.6;
+            line-height: 1.7;
             white-space: pre-wrap;
+            font-size: 1rem;
         }
 
-        /* --- АДАПТИВ (МОБИЛЬНЫЕ) --- */
+        /* --- АДАПТИВ (МОБИЛЬНЫЕ УСТРОЙСТВА) --- */
         @media (max-width: 768px) {
             .field-left {
-                width: 100%;
-                height: 30px;
-                top: 0;
-                left: 0;
+                position: fixed;
+                width: 100vw;
+                height: 35px;
+                border-right: none;
+                border-bottom: 1px solid var(--divider);
             }
 
             .field-bg {
-                width: 100%;
-                height: 100%;
                 background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20'%3E%3Ctext x='0' y='12' font-family='monospace' font-size='12' fill='%23ffffff' fill-opacity='0.08'%3E@%3C/text%3E%3C/svg%3E");
                 background-repeat: repeat-x;
                 animation: scroll-field-horizontal 6s linear infinite;
             }
 
-            .content {
-                margin-top: 30px;
+            .page-header {
                 margin-left: 0;
-                margin-right: 0;
+                margin-top: 35px;
+                padding: 2rem 1.5rem 1.5rem 1.5rem;
             }
 
-            .header {
-                padding: 1.5rem;
+            .content {
+                margin-left: 0;
+                padding: 2rem 1.5rem;
             }
 
             .section-title {
                 font-size: 1.5rem;
+            }
+
+            .logo {
+                padding: 1.2rem 1.5rem;
+                font-size: 1.2rem;
             }
         }
 
@@ -192,18 +189,18 @@
 </head>
 <body>
 
-    <div class="header">
-        <a href="./" class="logo">slashkill</a>
-    </div>
+    <a href="./" class="logo">slashkill</a>
 
     <div class="field-left">
         <div class="field-bg"></div>
     </div>
 
-    <main class="content">
+    <header class="page-header">
         <h1 class="section-title">shitposting</h1>
         <p class="section-subtitle">(псиопы и тейки)</p>
+    </header>
 
+    <main class="content">
         <article class="post">
             <div class="post-date">2026.08.17</div>
             <div class="post-content">2026.08.17 >__ пример первой мысли...</div>
