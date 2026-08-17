@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>slashkill | blog</title>
     
-    <!-- Подключение JetBrains Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -16,8 +15,7 @@
             --text-primary: #d4d4d4;
             --text-muted: rgba(212, 212, 212, 0.5);
             --divider: rgba(255, 255, 255, 0.12);
-            --hover-glow: rgba(255, 255, 255, 0.9);
-            --grid-step: 60px;
+            --hover-glow: rgba(255, 255, 255, 0.95);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -29,22 +27,71 @@
             height: 100vh;
             width: 100vw;
             overflow: hidden;
-            position: relative;
+            display: flex;
             -webkit-font-smoothing: antialiased;
         }
 
-        /* --- ФОН: Едва заметные @ по узлам сетки --- */
-        .bg-pattern {
+        /* --- СПЛИТ-ЭКРАН --- */
+        .panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            text-decoration: none;
+            color: var(--text-primary);
+            position: relative;
+            overflow: hidden; /* Обрезаем всё, что выходит за пределы панели */
+            transition: background-color 0.4s ease;
+        }
+
+        /* Вертикальный разделитель (ПК) */
+        .panel:first-child::before {
+            content: '';
             position: absolute;
-            inset: 0;
-            z-index: -1;
+            right: 0;
+            top: 15%;
+            height: 70%;
+            width: 1px;
+            background: var(--divider);
+            z-index: 2;
             pointer-events: none;
-            /* 
-               SVG-паттерн: символ @ строго в левом верхнем углу каждой клетки.
-               Opacity встроен в fill, чтобы не было артефактов наложения.
-            */
+        }
+
+        /* --- ФОНОВЫЙ ПАТТЕРН ВНУТРИ КАЖДОЙ ПАНЕЛИ --- */
+        .panel__bg {
+            position: absolute;
+            /* Делаем слой больше родителя, чтобы при движении не было пустых краёв */
+            inset: -20px; 
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.6;
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Ctext x='0' y='11' font-family='monospace' font-size='11' fill='%23ffffff' fill-opacity='0.07'%3E@%3C/text%3E%3C/svg%3E");
             background-repeat: repeat;
+            /* Начальная точка для анимации */
+            transform: translate(0, 0);
+            will-change: transform;
+        }
+
+        /* --- КОНТЕНТ --- */
+        .panel__content {
+            position: relative;
+            z-index: 1;
+            padding: 2rem;
+        }
+
+        .panel-title {
+            font-size: clamp(1.5rem, 3vw, 2.2rem);
+            font-weight: 700;
+            margin-bottom: 0.6rem;
+            transition: transform 0.3s ease, color 0.3s ease, letter-spacing 0.3s ease;
+        }
+
+        .panel-subtitle {
+            font-size: clamp(0.7rem, 1.2vw, 0.85rem);
+            color: var(--text-muted);
+            transition: color 0.3s ease;
         }
 
         /* --- ЛОГОТИП --- */
@@ -57,124 +104,91 @@
             font-weight: 700;
             text-decoration: none;
             color: var(--text-primary);
-            z-index: 10;
+            z-index: 20;
             line-height: 1;
-            transition: color 0.3s ease, opacity 0.3s ease;
+            transition: color 0.3s ease;
+        }
+        .logo:hover { color: var(--hover-glow); }
+
+        /* --- HOVER-ЭФФЕКТЫ --- */
+        
+        /* 1. Фон начинает хаотично плыть */
+        .panel:hover .panel__bg {
+            animation: bg-drift 3s ease-in-out infinite alternate;
         }
 
-        .logo:hover {
-            color: var(--hover-glow);
-        }
-
-        /* --- СПЛИТ-ЭКРАН --- */
-        .split {
-            display: flex;
-            flex-direction: row;
-            height: 100%;
-            width: 100%;
-        }
-
-        .panel {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            text-decoration: none;
-            color: var(--text-primary);
-            padding: 2rem;
-            position: relative;
-            transition: background-color 0.4s ease;
-        }
-
-        /* Тонкий вертикальный разделитель (ПК) */
-        .panel:first-child::after {
-            content: '';
-            position: absolute;
-            right: 0;
-            top: 15%;
-            height: 70%;
-            width: 1px;
-            background: var(--divider);
-            transition: opacity 0.4s ease;
-        }
-
-        .panel-title {
-            font-size: clamp(1.5rem, 3vw, 2.2rem);
-            font-weight: 700;
-            margin-bottom: 0.6rem;
-            transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-                        color 0.35s ease,
-                        letter-spacing 0.35s ease;
-        }
-
-        .panel-subtitle {
-            font-size: clamp(0.7rem, 1.2vw, 0.85rem);
-            color: var(--text-muted);
-            font-weight: 400;
-            transition: color 0.35s ease, opacity 0.35s ease;
-        }
-
-        /* Ховер-эффекты */
-        .panel:hover {
-            background-color: rgba(255, 255, 255, 0.02);
-        }
-
+        /* 2. Текст увеличивается */
         .panel:hover .panel-title {
-            transform: scale(1.06);
-            letter-spacing: 1.5px;
+            transform: scale(1.08);
+            letter-spacing: 2px;
             color: var(--hover-glow);
+        }
+
+        /* 3. Текст начинает нервно трястись */
+        .panel:hover .panel-title {
+            animation: text-shake 0.4s steps(2) infinite;
         }
 
         .panel:hover .panel-subtitle {
             color: var(--text-primary);
         }
 
-        .panel:hover::after {
-            opacity: 0.3;
+        .panel:hover {
+            background-color: rgba(255, 255, 255, 0.02);
         }
 
-        /* --- АДАПТИВ: МОБИЛЬНЫЕ --- */
+        /* --- KEYFRAMES --- */
+        
+        /* Хаотичное плавное движение фона */
+        @keyframes bg-drift {
+            0%   { transform: translate(0, 0); }
+            25%  { transform: translate(-8px, 5px); }
+            50%  { transform: translate(5px, -8px); }
+            75%  { transform: translate(-5px, -3px); }
+            100% { transform: translate(8px, 6px); }
+        }
+
+        /* Нервная тряска текста (микро-смещения) */
+        @keyframes text-shake {
+            0%   { transform: scale(1.08) translate(0, 0); }
+            25%  { transform: scale(1.08) translate(1.5px, -1px); }
+            50%  { transform: scale(1.08) translate(-1px, 1.5px); }
+            75%  { transform: scale(1.08) translate(1px, 1px); }
+            100% { transform: scale(1.08) translate(-1.5px, -1.5px); }
+        }
+
+        /* --- АДАПТИВ --- */
         @media (max-width: 768px) {
-            .split {
-                flex-direction: column;
+            body { flex-direction: column; }
+            
+            .panel:first-child::before {
+                right: auto; top: auto; bottom: 0; left: 15%;
+                width: 70%; height: 1px;
             }
-
-            /* Убираем вертикальный разделитель, добавляем горизонтальный */
-            .panel:first-child::after {
-                right: auto;
-                top: auto;
-                bottom: 0;
-                left: 15%;
-                width: 70%;
-                height: 1px;
-            }
-
-            .logo {
-                padding: 1.5rem 1.75rem;
-                font-size: 1.4rem;
-            }
+            
+            .logo { padding: 1.5rem 1.75rem; font-size: 1.4rem; }
         }
     </style>
 </head>
 <body>
 
-    <div class="bg-pattern"></div>
-
     <a href="/" class="logo">slashkill</a>
 
-    <main class="split">
-        <a href="/shitposting/" class="panel">
+    <a href="/shitposting/" class="panel">
+        <div class="panel__bg"></div>
+        <div class="panel__content">
             <h1 class="panel-title">shitposting</h1>
             <p class="panel-subtitle">(псиопы и тейки)</p>
-        </a>
+        </div>
+    </a>
 
-        <a href="/music/" class="panel">
+    <a href="/music/" class="panel">
+        <div class="panel__bg"></div>
+        <div class="panel__content">
             <h1 class="panel-title">music</h1>
             <p class="panel-subtitle">(строки из песен и музыка)</p>
-        </a>
-    </main>
+        </div>
+    </a>
 
 </body>
 </html>
