@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>slashkill</title>
+    <style>
+        /* Обнуление и базовые стили */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #0d0d0d;
+            color: #e0e0e0;
+            font-family: 'Courier New', Courier, monospace; /* Программистский моноширинный шрифт */
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Фоновая плитка 2x2 с символами @ */
+        .bg-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle, #222 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: -1;
+            opacity: 0.4;
+        }
+        
+        /* Имитация паттерна @ по углам плитки (через псевдоэлементы или легкий CSS) */
+        .bg-grid::after {
+            content: "@   @     @   @     @   @     @   @     @   @     @   @";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            font-size: 10px;
+            color: #2a2a2a;
+            word-spacing: 35px;
+            line-height: 40px;
+            pointer-events: none;
+            white-space: pre-wrap;
+        }
+
+        /* Логотип / Псевдоним в левом верхнем углу */
+        .logo {
+            position: absolute;
+            top: 20px;
+            left: 30px;
+            z-index: 10;
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #fff;
+            text-decoration: none;
+            letter-spacing: 1px;
+            border: 1px solid #333;
+            padding: 6px 12px;
+            background: #111;
+            transition: 0.2s;
+        }
+
+        .logo:hover {
+            border-color: #fff;
+            background: #222;
+        }
+
+        /* Главный контейнер (Split Screen) */
+        .split-container {
+            display: flex;
+            width: 100%;
+            height: 100vh;
+        }
+
+        /* Стороны (Левая и Правая) */
+        .side {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            cursor: pointer;
+            text-decoration: none;
+            color: #e0e0e0;
+            position: relative;
+            transition: background-color 0.3s ease;
+            padding: 20px;
+        }
+
+        .side:hover {
+            background-color: rgba(255, 255, 255, 0.02);
+        }
+
+        /* Вертикальная разделительная линия по центру */
+        .side:first-child {
+            border-right: 1px solid #333;
+        }
+
+        /* Контент внутри сторон */
+        .side-content {
+            transition: transform 0.25s ease, text-shadow 0.25s ease;
+        }
+
+        /* Эффект увеличения и подсветки при наведении */
+        .side:hover .side-title {
+            transform: scale(1.1);
+            color: #ffffff;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+        }
+
+        .side-title {
+            font-size: 2.2rem;
+            font-weight: bold;
+            text-transform: lowercase;
+            margin-bottom: 10px;
+            transition: transform 0.25s ease, color 0.25s ease, text-shadow 0.25s ease;
+        }
+
+        .side-subtitle {
+            font-size: 0.95rem;
+            color: #777;
+            transition: color 0.25s ease;
+        }
+
+        .side:hover .side-subtitle {
+            color: #bbb;
+        }
+
+        /* Адаптация под телефоны: горизонтальное разделение (верх / низ) */
+        @media (max-width: 768px) {
+            .split-container {
+                flex-direction: column;
+            }
+            .side:first-child {
+                border-right: none;
+                border-bottom: 1px solid #333;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-grid"></div>
+
+    <!-- Псевдоним в левом верхнем углу -->
+    <a href="#" class="logo">slashkill</a>
+
+    <!-- Экран выбора разделов -->
+    <div class="split-container">
+        <!-- Левая сторона: Shitposting -->
+        <a href="shitposting.html" class="side">
+            <div class="side-content">
+                <div class="side-title">shitposting</div>
+                <div class="side-subtitle">(псиопы и тейки)</div>
+            </div>
+        </a>
+
+        <!-- Правая сторона: Music -->
+        <a href="music.html" class="side">
+            <div class="side-content">
+                <div class="side-title">music</div>
+                <div class="side-subtitle">(строки из песен и музыка)</div>
+            </div>
+        </a>
+    </div>
+
+-</body>
+</html>
