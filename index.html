@@ -3,173 +3,178 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>slashkill</title>
+    <title>slashkill | blog</title>
+    
+    <!-- Подключение JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+
     <style>
-        /* Обнуление и базовые стили */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
+        :root {
+            --bg-color: #0c0c0c;
+            --text-primary: #d4d4d4;
+            --text-muted: rgba(212, 212, 212, 0.5);
+            --divider: rgba(255, 255, 255, 0.12);
+            --hover-glow: rgba(255, 255, 255, 0.9);
+            --grid-step: 60px;
         }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            background-color: #0d0d0d;
-            color: #e0e0e0;
-            font-family: 'Courier New', Courier, monospace; /* Программистский моноширинный шрифт */
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: 'JetBrains Mono', monospace;
             height: 100vh;
+            width: 100vw;
             overflow: hidden;
             position: relative;
+            -webkit-font-smoothing: antialiased;
         }
 
-        /* Фоновая плитка 2x2 с символами @ */
-        .bg-grid {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                radial-gradient(circle, #222 1px, transparent 1px);
-            background-size: 40px 40px;
-            z-index: -1;
-            opacity: 0.4;
-        }
-        
-        /* Имитация паттерна @ по углам плитки (через псевдоэлементы или легкий CSS) */
-        .bg-grid::after {
-            content: "@   @     @   @     @   @     @   @     @   @     @   @";
+        /* --- ФОН: Едва заметные @ по узлам сетки --- */
+        .bg-pattern {
             position: absolute;
-            width: 100%;
-            height: 100%;
-            font-size: 10px;
-            color: #2a2a2a;
-            word-spacing: 35px;
-            line-height: 40px;
+            inset: 0;
+            z-index: -1;
             pointer-events: none;
-            white-space: pre-wrap;
+            /* 
+               SVG-паттерн: символ @ строго в левом верхнем углу каждой клетки.
+               Opacity встроен в fill, чтобы не было артефактов наложения.
+            */
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Ctext x='0' y='11' font-family='monospace' font-size='11' fill='%23ffffff' fill-opacity='0.07'%3E@%3C/text%3E%3C/svg%3E");
+            background-repeat: repeat;
         }
 
-        /* Логотип / Псевдоним в левом верхнем углу */
+        /* --- ЛОГОТИП --- */
         .logo {
             position: absolute;
-            top: 20px;
-            left: 30px;
-            z-index: 10;
-            font-size: 1.1rem;
-            font-weight: bold;
-            color: #fff;
+            top: 0;
+            left: 0;
+            padding: 2rem 2.5rem;
+            font-size: 1.75rem;
+            font-weight: 700;
             text-decoration: none;
-            letter-spacing: 1px;
-            border: 1px solid #333;
-            padding: 6px 12px;
-            background: #111;
-            transition: 0.2s;
+            color: var(--text-primary);
+            z-index: 10;
+            line-height: 1;
+            transition: color 0.3s ease, opacity 0.3s ease;
         }
 
         .logo:hover {
-            border-color: #fff;
-            background: #222;
+            color: var(--hover-glow);
         }
 
-        /* Главный контейнер (Split Screen) */
-        .split-container {
+        /* --- СПЛИТ-ЭКРАН --- */
+        .split {
             display: flex;
+            flex-direction: row;
+            height: 100%;
             width: 100%;
-            height: 100vh;
         }
 
-        /* Стороны (Левая и Правая) */
-        .side {
+        .panel {
             flex: 1;
             display: flex;
             flex-direction: column;
-            align-items: center;
             justify-content: center;
+            align-items: center;
             text-align: center;
-            cursor: pointer;
             text-decoration: none;
-            color: #e0e0e0;
+            color: var(--text-primary);
+            padding: 2rem;
             position: relative;
-            transition: background-color 0.3s ease;
-            padding: 20px;
+            transition: background-color 0.4s ease;
         }
 
-        .side:hover {
+        /* Тонкий вертикальный разделитель (ПК) */
+        .panel:first-child::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 15%;
+            height: 70%;
+            width: 1px;
+            background: var(--divider);
+            transition: opacity 0.4s ease;
+        }
+
+        .panel-title {
+            font-size: clamp(1.5rem, 3vw, 2.2rem);
+            font-weight: 700;
+            margin-bottom: 0.6rem;
+            transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                        color 0.35s ease,
+                        letter-spacing 0.35s ease;
+        }
+
+        .panel-subtitle {
+            font-size: clamp(0.7rem, 1.2vw, 0.85rem);
+            color: var(--text-muted);
+            font-weight: 400;
+            transition: color 0.35s ease, opacity 0.35s ease;
+        }
+
+        /* Ховер-эффекты */
+        .panel:hover {
             background-color: rgba(255, 255, 255, 0.02);
         }
 
-        /* Вертикальная разделительная линия по центру */
-        .side:first-child {
-            border-right: 1px solid #333;
+        .panel:hover .panel-title {
+            transform: scale(1.06);
+            letter-spacing: 1.5px;
+            color: var(--hover-glow);
         }
 
-        /* Контент внутри сторон */
-        .side-content {
-            transition: transform 0.25s ease, text-shadow 0.25s ease;
+        .panel:hover .panel-subtitle {
+            color: var(--text-primary);
         }
 
-        /* Эффект увеличения и подсветки при наведении */
-        .side:hover .side-title {
-            transform: scale(1.1);
-            color: #ffffff;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+        .panel:hover::after {
+            opacity: 0.3;
         }
 
-        .side-title {
-            font-size: 2.2rem;
-            font-weight: bold;
-            text-transform: lowercase;
-            margin-bottom: 10px;
-            transition: transform 0.25s ease, color 0.25s ease, text-shadow 0.25s ease;
-        }
-
-        .side-subtitle {
-            font-size: 0.95rem;
-            color: #777;
-            transition: color 0.25s ease;
-        }
-
-        .side:hover .side-subtitle {
-            color: #bbb;
-        }
-
-        /* Адаптация под телефоны: горизонтальное разделение (верх / низ) */
+        /* --- АДАПТИВ: МОБИЛЬНЫЕ --- */
         @media (max-width: 768px) {
-            .split-container {
+            .split {
                 flex-direction: column;
             }
-            .side:first-child {
-                border-right: none;
-                border-bottom: 1px solid #333;
+
+            /* Убираем вертикальный разделитель, добавляем горизонтальный */
+            .panel:first-child::after {
+                right: auto;
+                top: auto;
+                bottom: 0;
+                left: 15%;
+                width: 70%;
+                height: 1px;
+            }
+
+            .logo {
+                padding: 1.5rem 1.75rem;
+                font-size: 1.4rem;
             }
         }
     </style>
 </head>
 <body>
 
-    <div class="bg-grid"></div>
+    <div class="bg-pattern"></div>
 
-    <!-- Псевдоним в левом верхнем углу -->
-    <a href="#" class="logo">slashkill</a>
+    <a href="/" class="logo">slashkill</a>
 
-    <!-- Экран выбора разделов -->
-    <div class="split-container">
-        <!-- Левая сторона: Shitposting -->
-        <a href="shitposting.html" class="side">
-            <div class="side-content">
-                <div class="side-title">shitposting</div>
-                <div class="side-subtitle">(псиопы и тейки)</div>
-            </div>
+    <main class="split">
+        <a href="/shitposting/" class="panel">
+            <h1 class="panel-title">shitposting</h1>
+            <p class="panel-subtitle">(псиопы и тейки)</p>
         </a>
 
-        <!-- Правая сторона: Music -->
-        <a href="music.html" class="side">
-            <div class="side-content">
-                <div class="side-title">music</div>
-                <div class="side-subtitle">(строки из песен и музыка)</div>
-            </div>
+        <a href="/music/" class="panel">
+            <h1 class="panel-title">music</h1>
+            <p class="panel-subtitle">(строки из песен и музыка)</p>
         </a>
-    </div>
+    </main>
 
--</body>
+</body>
 </html>
