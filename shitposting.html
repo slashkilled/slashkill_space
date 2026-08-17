@@ -31,18 +31,21 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* --- ЛОГОТИП --- */
+        /* --- ЛОГОТИП В УГЛУ НАД ПОЛЯМИ --- */
         .logo {
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
-            padding: 2rem 2.5rem;
-            font-size: 1.5rem;
+            width: 120px;
+            padding: 2rem 1rem;
+            font-size: 1.1rem;
             font-weight: 700;
             text-decoration: none;
             color: var(--text-primary);
             z-index: 100;
-            line-height: 1;
+            text-align: center;
+            line-height: 1.2;
+            word-break: break-all;
             transition: color 0.3s ease;
         }
         .logo:hover { color: #ffffff; }
@@ -108,7 +111,7 @@
             position: relative;
         }
 
-        /* Фоновая разлиновка под каждым постом _ _ _ _ */
+        /* Фоновая разлиновка под каждым постом */
         .post::after {
             content: "";
             position: absolute;
@@ -124,12 +127,6 @@
                 transparent 16px
             );
             opacity: 0.25;
-        }
-
-        .post-date {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            margin-bottom: 0.8rem;
         }
 
         .post-content {
@@ -154,6 +151,13 @@
                 animation: scroll-field-horizontal 6s linear infinite;
             }
 
+            .logo {
+                position: absolute;
+                width: auto;
+                padding: 0.5rem 1rem;
+                font-size: 1rem;
+            }
+
             .page-header {
                 margin-left: 0;
                 margin-top: 35px;
@@ -167,11 +171,6 @@
 
             .section-title {
                 font-size: 1.5rem;
-            }
-
-            .logo {
-                padding: 1.2rem 1.5rem;
-                font-size: 1.2rem;
             }
         }
 
@@ -201,19 +200,9 @@
     </header>
 
     <main class="content">
+        <!-- Сюда в будущем будут добавляться посты -->
         <article class="post">
-            <div class="post-date">2026.08.17</div>
             <div class="post-content">2026.08.17 >__ пример первой мысли...</div>
-        </article>
-
-        <article class="post">
-            <div class="post-date">2026.08.18</div>
-            <div class="post-content">2026.08.18 >__ ещё один пост с текстом, который может быть длинным и содержать несколько строк, чтобы проверить переносы.</div>
-        </article>
-
-        <article class="post">
-            <div class="post-date">2026.08.19</div>
-            <div class="post-content">2026.08.19 >__ текст с длинной строкой, которая будет переноситься по ширине контента и не вылезать за границы блока.</div>
         </article>
     </main>
 
