@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>slashkill | blog</title>
-
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -14,7 +14,7 @@
             --bg-color: #0c0c0c;
             --text-primary: #d4d4d4;
             --text-muted: rgba(212, 212, 212, 0.5);
-            --divider: rgba(255, 255, 255, 0.15);
+            --divider: rgba(255, 255, 255, 0.25);
             --hover-glow: #ffffff;
         }
 
@@ -28,31 +28,7 @@
             width: 100vw;
             overflow: hidden;
             display: flex;
-            position: relative;
             -webkit-font-smoothing: antialiased;
-        }
-
-        /* --- ЕДИНЫЙ ФОН НА ВЕСЬ ЭКРАН --- */
-        .bg {
-            position: absolute;
-            inset: 0;
-            z-index: 0;
-            pointer-events: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Ctext x='0' y='12' font-family='monospace' font-size='12' fill='%23ffffff' fill-opacity='0.08'%3E@%3C/text%3E%3C/svg%3E");
-            background-repeat: repeat;
-        }
-
-        /* --- ЛИНИЯ СТРОГО ПО ЦЕНТРУ ЭКРАНА --- */
-        .divider {
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            width: 1px;
-            height: 65%;
-            background-color: var(--divider);
-            z-index: 5;
-            pointer-events: none;
         }
 
         /* --- ЛОГОТИП --- */
@@ -82,9 +58,23 @@
             text-decoration: none;
             color: var(--text-primary);
             position: relative;
-            z-index: 1;
             overflow: hidden;
             transition: background-color 0.6s ease;
+        }
+
+        /* --- ФОН С СИМВОЛАМИ @ ВНУТРИ ПАНЕЛЕЙ (СИММЕТРИЧНЫЙ) --- */
+        .panel-bg {
+            position: absolute;
+            /* Используем точное позиционирование, чтобы символы @ были симметричны */
+            top: 0; left: 0; right: 0; bottom: 0;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.5;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Ctext x='0' y='12' font-family='monospace' font-size='12' fill='%23ffffff' fill-opacity='0.08'%3E@%3C/text%3E%3C/svg%3E");
+            background-repeat: repeat;
+            background-position: 0 0;
+            will-change: transform;
+            transition: transform 0.6s ease-out;
         }
 
         .panel-content {
@@ -97,9 +87,9 @@
             font-size: clamp(1.5rem, 3vw, 2.2rem);
             font-weight: 700;
             margin-bottom: 0.6rem;
-            transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
                         color 0.4s ease,
-                        letter-spacing 0.5s ease;
+                        letter-spacing 0.4s ease;
         }
 
         .panel-subtitle {
@@ -108,16 +98,33 @@
             transition: color 0.4s ease;
         }
 
-        /* --- HOVER --- */
+        /* --- ЛИНИЯ РАЗДЕЛИТЕЛЬ (ПК) --- */
+        .panel.left::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 15%;
+            height: 70%;
+            width: 1px;
+            background-color: var(--divider);
+            z-index: 20;
+            pointer-events: none;
+        }
+
+        /* --- HOVER ЭФФЕКТЫ --- */
         .panel:hover {
-            background-color: rgba(255, 255, 255, 0.02);
+            background-color: rgba(255, 255, 255, 0.03);
+        }
+
+        .panel:hover .panel-bg {
+            animation: bg-drift 5s ease-in-out infinite alternate;
         }
 
         .panel:hover .panel-title {
-            transform: scale(1.05);
-            letter-spacing: 1.5px;
+            transform: scale(1.07);
+            letter-spacing: 2px;
             color: var(--hover-glow);
-            animation: text-tremor 1.2s ease-in-out infinite;
+            animation: text-tremor 0.8s ease-in-out infinite;
         }
 
         .panel:hover .panel-subtitle {
@@ -125,44 +132,55 @@
         }
 
         /* --- АНИМАЦИИ --- */
+        @keyframes bg-drift {
+            0%   { transform: translate(0, 0); }
+            20%  { transform: translate(-6px, 4px); }
+            40%  { transform: translate(4px, -6px); }
+            60%  { transform: translate(-4px, -3px); }
+            80%  { transform: translate(5px, 5px); }
+            100% { transform: translate(-3px, 6px); }
+        }
+
         @keyframes text-tremor {
-            0%, 100% { transform: scale(1.05) translate(0, 0); }
-            25%      { transform: scale(1.05) translate(0.5px, -0.5px); }
-            50%      { transform: scale(1.05) translate(-0.5px, 0.5px); }
-            75%      { transform: scale(1.05) translate(0.5px, 0.3px); }
+            0%, 100% { transform: scale(1.07) translate(0, 0); }
+            25%      { transform: scale(1.07) translate(1px, -1px); }
+            50%      { transform: scale(1.07) translate(-1px, 1px); }
+            75%      { transform: scale(1.07) translate(1px, 0.5px); }
         }
 
         /* --- МОБИЛЬНАЯ ВЕРСИЯ --- */
         @media (max-width: 768px) {
             body { flex-direction: column; }
-
-            .divider {
-                left: 50%;
-                top: 50%;
-                transform: translate(-50%, -50%);
-                width: 65%;
+            
+            .panel.left::after {
+                right: auto;
+                top: auto;
+                bottom: 0;
+                left: 15%;
+                width: 70%;
                 height: 1px;
             }
-
+            
             .logo { padding: 1.5rem 1.75rem; font-size: 1.4rem; }
         }
     </style>
 </head>
 <body>
 
-    <div class="bg"></div>
-    <div class="divider"></div>
-
     <a href="/" class="logo">slashkill</a>
 
-    <a href="/shitposting/" class="panel">
+    <!-- Левая панель -->
+    <a href="/shitposting/" class="panel left">
+        <div class="panel-bg"></div>
         <div class="panel-content">
             <h1 class="panel-title">shitposting</h1>
             <p class="panel-subtitle">(псиопы и тейки)</p>
         </div>
     </a>
 
-    <a href="/music/" class="panel">
+    <!-- Правая панель -->
+    <a href="/music/" class="panel right">
+        <div class="panel-bg"></div>
         <div class="panel-content">
             <h1 class="panel-title">music</h1>
             <p class="panel-subtitle">(строки из песен и музыка)</p>
