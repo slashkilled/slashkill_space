@@ -44,7 +44,7 @@
             z-index: 100;
             line-height: 1;
             transition: color 0.3s ease;
-            cursor: pointer; /* Добавляем курсор для лучшей UX */
+            cursor: pointer;
         }
         .logo:hover { color: var(--hover-glow); }
 
@@ -182,12 +182,12 @@
 </head>
 <body>
 
-    <!-- Используем JavaScript для перезагрузки страницы -->
-    <a href="#" class="logo" onclick="location.reload(); return false;">slashkill</a>
+    <!-- Исправленная ссылка для перезагрузки страницы -->
+    <a href="/" class="logo" onclick="location.reload(); return false;">slashkill</a>
     <a href="https://t.me/slashkilled" target="_blank" class="tg-tag">tg: @slashkilled</a>
 
-    <!-- Левая панель -->
-    <a href="/shitposting/" class="panel left">
+    <!-- Левая панель - переход на shitposting -->
+    <a href="./shitposting/" class="panel left">
         <div class="panel-bg"></div>
         <div class="panel-content">
             <h1 class="panel-title">shitposting</h1>
@@ -195,8 +195,8 @@
         </div>
     </a>
 
-    <!-- Правая панель -->
-    <a href="/music/" class="panel right">
+    <!-- Правая панель - переход на music -->
+    <a href="./music/" class="panel right">
         <div class="panel-bg"></div>
         <div class="panel-content">
             <h1 class="panel-title">music</h1>
