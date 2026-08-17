@@ -14,7 +14,6 @@
             --bg-color: #0c0c0c;
             --text-primary: #d4d4d4;
             --text-muted: rgba(212, 212, 212, 0.4);
-            --accent-gray: rgba(255, 255, 255, 0.1);
             --divider: rgba(255, 255, 255, 0.2);
         }
 
@@ -31,13 +30,13 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* --- ЛОГОТИП В УГЛУ НАД ПОЛЯМИ --- */
+        /* --- ЛОГОТИП В ЛЕВОМ ВЕРХНЕМ УГЛУ НАД ПОЛЯМИ --- */
         .logo {
             position: fixed;
             top: 0;
             left: 0;
             width: 120px;
-            padding: 2rem 1rem;
+            padding: 2rem 0;
             font-size: 1.1rem;
             font-weight: 700;
             text-decoration: none;
@@ -45,7 +44,6 @@
             z-index: 100;
             text-align: center;
             line-height: 1.2;
-            word-break: break-all;
             transition: color 0.3s ease;
         }
         .logo:hover { color: #ffffff; }
@@ -152,10 +150,13 @@
             }
 
             .logo {
-                position: absolute;
+                position: fixed;
                 width: auto;
                 padding: 0.5rem 1rem;
                 font-size: 1rem;
+                top: 0;
+                left: 0;
+                background: var(--bg-color);
             }
 
             .page-header {
@@ -196,14 +197,16 @@
 
     <header class="page-header">
         <h1 class="section-title">shitposting</h1>
-        <p class="section-subtitle">(псиопы и тейки)</p>
+        <p class="section-subtitle">(psyops & hot-takes)</p>
     </header>
 
     <main class="content">
-        <!-- Сюда в будущем будут добавляться посты -->
+        <!-- Сюда добавляй новые посты по шаблону: -->
+        <!-- 
         <article class="post">
-            <div class="post-content">2026.08.17 >__ пример первой мысли...</div>
-        </article>
+            <div class="post-content">2026.08.18 >__ твой текст...</div>
+        </article> 
+        -->
     </main>
 
 </body>
