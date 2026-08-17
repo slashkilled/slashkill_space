@@ -30,7 +30,7 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* --- ЛОГОТИП В ЛЕВОМ ВЕРХНЕМ УГЛУ НАД ПОЛЯМИ --- */
+        /* --- ЛОГОТИП (ДЕСКТОП) --- */
         .logo {
             position: fixed;
             top: 0;
@@ -140,7 +140,7 @@
                 top: 0;
                 left: 0;
                 width: 100vw;
-                height: 40px; /* Ровно два ряда под @ */
+                height: 40px; /* Два ряда символов @ */
                 border-right: none;
                 border-bottom: 1px solid var(--divider);
             }
@@ -152,7 +152,7 @@
                 animation: scroll-field-horizontal 6s linear infinite;
             }
 
-            /* Второй ряд символов @ через псевдоэлемент */
+            /* Второй ряд символов @ */
             .field-left::after {
                 content: "";
                 position: absolute;
@@ -165,11 +165,11 @@
                 animation: scroll-field-horizontal-rev 8s linear infinite;
             }
 
-            /* Логотип без фона и рамок, строго в углу под полями */
+            /* Логотип прижат к левому краю и вплотную к горизонтальной линии полей */
             .logo {
                 position: absolute;
-                top: 48px;
-                left: 1.2rem;
+                top: 40px;
+                left: 0;
                 width: auto;
                 padding: 0;
                 font-size: 1rem;
@@ -179,7 +179,7 @@
             .page-header {
                 margin-left: 0;
                 margin-top: 40px;
-                padding: 3.5rem 1.5rem 1.5rem 1.5rem; /* Добавлен отступ сверху, чтобы заголовок не наезжал на логотип */
+                padding: 2.5rem 1.5rem 1.5rem 1.5rem; /* Увеличен верхний отступ, чтобы заголовок не наезжал на логотип */
             }
 
             .content {
