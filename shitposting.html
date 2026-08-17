@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>slashkill | shitposting</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-color: #0c0c0c;
+            --text-primary: #d4d4d4;
+            --text-muted: rgba(212, 212, 212, 0.4);
+            --accent-gray: rgba(255, 255, 255, 0.1);
+            --divider: rgba(255, 255, 255, 0.15);
+            --post-bg: rgba(255, 255, 255, 0.02);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: 'JetBrains Mono', monospace;
+            height: 100vh;
+            width: 100vw;
+            overflow-x: hidden;
+            position: relative;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* --- ШАПКА --- */
+        .header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 2rem 2.5rem;
+            z-index: 10;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: var(--text-primary);
+            transition: color 0.3s ease;
+        }
+        .logo:hover { color: var(--text-primary); }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .section-subtitle {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        /* --- ТЕТРАЖНЫЕ ПОЛЯ (АДАПТИВНЫЕ) --- */
+        .field-left {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100px;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .field-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20'%3E%3Ctext x='0' y='12' font-family='monospace' font-size='12' fill='%23ffffff' fill-opacity='0.08'%3E@%3C/text%3E%3C/svg%3E");
+            background-repeat: repeat;
+            animation: scroll-field 8s linear infinite;
+            will-change: transform;
+        }
+
+        /* --- ОСНОВНОЙ КОНТЕНТ --- */
+        .content {
+            position: relative;
+            margin-top: 80px;
+            margin-left: 100px;
+            margin-right: 2rem;
+            max-width: 600px;
+            z-index: 2;
+        }
+
+        .post {
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px dashed var(--accent-gray);
+        }
+
+        .post-date {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+
+        .post-content {
+            line-height: 1.6;
+            white-space: pre-wrap;
+        }
+
+        /* --- АДАПТИВ (МОБИЛЬНЫЕ) --- */
+        @media (max-width: 768px) {
+            .field-left {
+                width: 100%;
+                height: 30px;
+                top: 0;
+                left: 0;
+            }
+
+            .field-bg {
+                width: 100%;
+                height: 100%;
+                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20'%3E%3Ctext x='0' y='12' font-family='monospace' font-size='12' fill='%23ffffff' fill-opacity='0.08'%3E@%3C/text%3E%3C/svg%3E");
+                background-repeat: repeat-x;
+                animation: scroll-field-horizontal 6s linear infinite;
+            }
+
+            .content {
+                margin-top: 30px;
+                margin-left: 0;
+                margin-right: 0;
+            }
+
+            .header {
+                padding: 1.5rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* --- АНИМАЦИИ --- */
+        @keyframes scroll-field {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-20px); }
+        }
+
+        @keyframes scroll-field-horizontal {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-20px); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <a href="/" class="logo">slashkill</a>
+    </div>
+
+    <div class="field-left">
+        <div class="field-bg"></div>
+    </div>
+
+    <main class="content">
+        <h1 class="section-title">shitposting</h1>
+        <p class="section-subtitle">(псиопы и тейки)</p>
+
+        <article class="post">
+            <div class="post-date">2026.08.17</div>
+            <div class="post-content">пример первой мысли...</div>
+        </article>
+
+        <article class="post">
+            <div class="post-date">2026.08.18</div>
+            <div class="post-content">ещё один пост с текстом, который может быть длинным и содержать несколько строк, чтобы проверить переносы.</div>
+        </article>
+
+        <article class="post">
+            <div class="post-date">2026.08.19</div>
+            <div class="post-content">текст с длинной строкой, которая будет переноситься по ширине контента и не вылезать за границы блока.</div>
+        </article>
+    </main>
+
+</body>
+</html>
