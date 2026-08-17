@@ -44,6 +44,7 @@
             z-index: 100;
             line-height: 1;
             transition: color 0.3s ease;
+            cursor: pointer; /* Добавляем курсор для лучшей UX */
         }
         .logo:hover { color: var(--hover-glow); }
 
@@ -181,7 +182,8 @@
 </head>
 <body>
 
-    <a href="/" class="logo">slashkill</a>
+    <!-- Используем JavaScript для перезагрузки страницы -->
+    <a href="#" class="logo" onclick="location.reload(); return false;">slashkill</a>
     <a href="https://t.me/slashkilled" target="_blank" class="tg-tag">tg: @slashkilled</a>
 
     <!-- Левая панель -->
