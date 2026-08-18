@@ -9,12 +9,10 @@ field_char: "@"
 {% for post in site.posts %}
   {% if post.category == "shitposting" %}
     <article class="post">
-      <div class="post-header-line">
+      <div class="post-line">
         <span class="post-date">{{ post.date | date: "%Y.%m.%d" }}</span>
         <span class="terminal-prompt">&gt;&#95;&#8203;&#95;</span>
-      </div>
-      <div class="post-content">
-        {{ post.content }}
+        <span class="post-text">{{ post.content }}</span>
       </div>
     </article>
   {% endif %}
