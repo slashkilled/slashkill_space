@@ -94,21 +94,22 @@
             color: var(--text-muted);
         }
 
-        /* --- ОСНОВНОЙ КОНТЕНТ --- */
+        /* --- ОСНОВНОЙ КОНТЕНТ И ПОСТЫ --- */
         .content {
             margin-left: 120px;
             padding: 3rem;
-            max-width: 800px;
+            max-width: 900px;
             position: relative;
             z-index: 2;
         }
 
         .post {
-            margin-bottom: 2.5rem;
-            padding-bottom: 0.8rem;
+            margin-bottom: 2rem;
+            padding-bottom: 0.6rem;
             position: relative;
         }
 
+        /* Пунктирная линия внизу поста */
         .post::after {
             content: "";
             position: absolute;
@@ -126,30 +127,30 @@
             opacity: 0.25;
         }
 
-        .post-header-line {
-            display: flex;
-            align-items: baseline;
-            flex-wrap: wrap;
-            gap: 0.6ch;
-            margin-bottom: 0.4rem;
-            font-size: 1rem;
+        /* Строка поста: дата >__ текст на одной линии */
+        .post-line {
+            font-size: 0.95rem;
+            line-height: 1.5;
+            color: var(--text-primary);
+            word-break: break-word;
         }
 
         .post-date {
             color: var(--text-primary);
+            margin-right: 0.6ch;
         }
 
         .terminal-prompt {
             color: var(--text-primary);
-            letter-spacing: 0.2ch;
+            letter-spacing: 0.15ch; /* Защищает подчеркивания от слияния в сплошную палку */
+            margin-right: 0.8ch;
             white-space: nowrap;
         }
 
-        .post-content {
-            line-height: 1.6;
-            white-space: pre-wrap;
-            font-size: 0.95rem;
+        .post-text {
             color: var(--text-primary);
+            font-weight: 400;
+            white-space: pre-wrap;
         }
 
         /* --- АДАПТИВ (МОБИЛЬНЫЕ УСТРОЙСТВА) --- */
