@@ -11,7 +11,8 @@ field_char: "@"
     <article class="post">
       <div class="post-line">
         <span class="post-date">{{ post.date | date: "%Y.%m.%d" }}</span>
-        <span class="terminal-prompt">&gt;&#95;&#8203;&#95;</span><span class="post-text">{{ post.content | strip_newlines | strip }}</span>
+        <span class="terminal-prompt">&gt;&#95;&#8203;&#95;</span>
+        <div class="post-text">{{ post.content }}</div>
       </div>
     </article>
   {% endif %}
