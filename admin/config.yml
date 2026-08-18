@@ -1,0 +1,16 @@
+backend:
+  name: git-gateway
+  branch: main # ветка твоего репозитория
+
+publish_mode: editorial_workflow
+
+collections:
+  - name: "posts"
+    label: "Записи"
+    folder: "_posts"
+    create: true
+    format: "frontmatter"
+    fields:
+      - {label: "Заголовок / Текст", name: "body", widget: "string"}
+      - {label: "Дата", name: "date", widget: "datetime", format: "YYYY-MM-DD HH:mm:ss Z"}
+      - {label: "Категория", name: "category", widget: "select", options: ["shitposting", "music"]}
