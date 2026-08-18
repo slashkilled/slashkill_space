@@ -128,11 +128,13 @@
         }
 
         /* Строка поста: дата >__ текст на одной линии */
-        .post-line {
+       .post-line {
+            display: flex;
+            align-items: baseline;
+            flex-wrap: wrap;
             font-size: 0.95rem;
             line-height: 1.5;
             color: var(--text-primary);
-            word-break: break-word;
         }
 
         .post-date {
@@ -148,9 +150,9 @@
         }
 
         .post-text {
+            display: inline; /* Возвращаем inline */
             color: var(--text-primary);
             font-weight: 400;
-            white-space: pre-wrap;
         }
 
         /* --- АДАПТИВ (МОБИЛЬНЫЕ УСТРОЙСТВА) --- */
