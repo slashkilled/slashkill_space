@@ -1,6 +1,5 @@
 backend:
-  name: github
-  repo: slashkilled/slashkill_space # Твой репозиторий
+  name: git-gateway
   branch: main # Основная ветка
 
 media_folder: "assets/uploads"
