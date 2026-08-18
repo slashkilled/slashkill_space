@@ -14,6 +14,6 @@ collections:
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}" # <--- Здесь остаются только дата и заголовок
     format: "frontmatter"
     fields:
-      - {label: "Заголовок / Текст", name: "body", widget: "string"}
-      - {label: "Дата", name: "date", widget: "date", format: "YYYY-MM-DD"} # <--- Изменили widget на "date" и формат на "YYYY-MM-DD"
-      - {label: "Категория", name: "category", widget: "select", options: ["shitposting", "music"]}
+  - {label: "Заголовок / Текст", name: "body", widget: "string"}
+  - {label: "Дата", name: "date", widget: "datetime", format: "YYYY-MM-DD"} # <--- Вернули "datetime"
+  - {label: "Категория", name: "category", widget: "select", options: ["shitposting", "music"]}
