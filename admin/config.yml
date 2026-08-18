@@ -11,11 +11,12 @@ collections:
     label: "Записи"
     folder: "_posts"
     create: true
+    # Автоматическое имя файла: год-месяц-день-плюс случайные цифры или уникальный ID поста
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
-    identifier_field: "title"
+    identifier_field: "filename_id"
     format: "frontmatter"
     fields:
-      - {label: "Заголовок", name: "title", widget: "string"}
+      - {label: "ID для файла (латиницей, например: post1, update)", name: "filename_id", widget: "string", default: "post"}
       - {label: "Текст поста", name: "body", widget: "markdown"}
       - {label: "Дата", name: "date", widget: "datetime", format: "YYYY-MM-DD"}
       - {label: "Категория", name: "category", widget: "select", options: ["shitposting", "music"]}
