@@ -2,14 +2,20 @@
 layout: default
 title: "slashkill | shitposting"
 section_title: "shitposting"
-section_subtitle: "psyops & hot-takes"
+section_subtitle: "(psyops & hot-takes)"
 field_char: "@"
 ---
 
 {% for post in site.posts %}
   {% if post.category == "shitposting" %}
     <article class="post">
-      <div class="post-content">{{ post.date | date: "%Y.%m.%d" }} >__ {{ post.content }}</div>
+      <div class="post-header-line">
+        <span class="post-date">{{ post.date | date: "%Y.%m.%d" }}</span>
+        <span class="terminal-prompt">&gt;&#95;&#8203;&#95;</span>
+      </div>
+      <div class="post-content">
+        {{ post.content }}
+      </div>
     </article>
   {% endif %}
 {% endfor %}
