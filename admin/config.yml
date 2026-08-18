@@ -11,12 +11,13 @@ collections:
     label: "Записи"
     folder: "_posts"
     create: true
-    # Явно указываем короткий шаблон имени. 
-    # Теперь сюда НИКОГДА не попадет текст поста, только дата и случайный ID.
-    slug: "{{year}}-{{month}}-{{day}}-{{shortid}}"
-    identifier_field: "date"
+    # КРИТИЧЕСКИ ВАЖНО: здесь мы убираем любые ссылки на body или заголовок.
+    # Имя файла будет ВСЕГДА коротким: дата + случайный ID (например: 2026-08-19-a1b2c).
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    identifier_field: "title"
     format: "frontmatter"
     fields:
+      - {label: "Имя для файла (латиницей, например: post)", name: "title", widget: "string", default: "post"}
       - {label: "Текст поста", name: "body", widget: "markdown"}
       - {label: "Дата", name: "date", widget: "datetime", format: "YYYY-MM-DD"}
       - {label: "Категория", name: "category", widget: "select", options: ["shitposting", "music"]}
