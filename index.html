@@ -58,6 +58,7 @@
             color: var(--text-muted);
             z-index: 100;
             transition: color 0.3s ease;
+            text-decoration: none;
         }
         .tg-tag:hover { color: var(--text-primary); }
 
@@ -76,19 +77,30 @@
             transition: background-color 0.6s ease;
         }
 
-        /* --- ФОН С СИМВОЛАМИ @ ВНУТРИ ПАНЕЛЕЙ (СИММЕТРИЧНЫЙ) --- */
-        .panel-bg {
+        /* --- ФОНОВЫЕ СЛОИ С СИМВОЛАМИ --- */
+        /* Первый слой (активируется при наведении) */
+        .panel-bg-1 {
             position: absolute;
-            /* Используем точное позиционирование для симметрии */
             top: 0; left: 0; right: 0; bottom: 0;
             z-index: 0;
             pointer-events: none;
-            opacity: 0.5;
+            opacity: 0.4;
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Ctext x='0' y='12' font-family='monospace' font-size='12' fill='%23ffffff' fill-opacity='0.08'%3E@%3C/text%3E%3C/svg%3E");
             background-repeat: repeat;
-            background-position: 0 0;
             will-change: transform;
-            transition: transform 0.6s ease-out;
+        }
+
+        /* Второй слой (постоянно еле-еле заметно анимирован) */
+        .panel-bg-2 {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.2;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Ctext x='10' y='25' font-family='monospace' font-size='10' fill='%23ffffff' fill-opacity='0.04'%3E@%3C/text%3E%3C/svg%3E");
+            background-repeat: repeat;
+            animation: bg-drift-slow 15s linear infinite alternate;
+            will-change: transform;
         }
 
         .panel-content {
@@ -130,8 +142,8 @@
             background-color: rgba(255, 255, 255, 0.03);
         }
 
-        .panel:hover .panel-bg {
-            animation: bg-drift 5s ease-in-out infinite alternate;
+        .panel:hover .panel-bg-1 {
+            animation: bg-drift-fast 5s ease-in-out infinite alternate;
         }
 
         .panel:hover .panel-title {
@@ -146,7 +158,12 @@
         }
 
         /* --- АНИМАЦИИ --- */
-        @keyframes bg-drift {
+        @keyframes bg-drift-slow {
+            0%   { transform: translate(0, 0); }
+            100% { transform: translate(-8px, 8px); }
+        }
+
+        @keyframes bg-drift-fast {
             0%   { transform: translate(0, 0); }
             20%  { transform: translate(-6px, 4px); }
             40%  { transform: translate(4px, -6px); }
@@ -182,25 +199,26 @@
 </head>
 <body>
 
-    <!-- Исправленная ссылка для перезагрузки страницы -->
     <a href="/" class="logo" onclick="location.reload(); return false;">slashkill</a>
     <a href="https://t.me/slashkilled" target="_blank" class="tg-tag">tg: @slashkilled</a>
 
-    <!-- Левая панель - переход на shitposting -->
+    <!-- Левая панель - shitposting -->
     <a href="shitposting.html" class="panel left">
-        <div class="panel-bg"></div>
+        <div class="panel-bg-1"></div>
+        <div class="panel-bg-2"></div>
         <div class="panel-content">
             <h1 class="panel-title">shitposting</h1>
-            <p class="panel-subtitle">(псиопы и тейки)</p>
+            <p class="panel-subtitle">(psyops & hot-takes)</p>
         </div>
     </a>
 
-    <!-- Правая панель - переход на music -->
+    <!-- Правая панель - music -->
     <a href="music.html" class="panel right">
-        <div class="panel-bg"></div>
+        <div class="panel-bg-1"></div>
+        <div class="panel-bg-2"></div>
         <div class="panel-content">
             <h1 class="panel-title">music</h1>
-            <p class="panel-subtitle">(строки из песен и музыка)</p>
+            <p class="panel-subtitle">(lyrics)</p>
         </div>
     </a>
 
