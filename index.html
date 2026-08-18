@@ -77,27 +77,27 @@
             transition: background-color 0.6s ease;
         }
 
-        /* --- ФОНОВЫЕ СЛОИ С СИМВОЛАМИ --- */
+        /* --- ФОНОВЫЕ СЛОИ С СИМВОЛАМИ (СДЕЛАНЫ ЗАМЕТНЕЕ) --- */
         /* Первый слой (активируется при наведении) */
         .panel-bg-1 {
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
             z-index: 0;
             pointer-events: none;
-            opacity: 0.4;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Ctext x='0' y='12' font-family='monospace' font-size='12' fill='%23ffffff' fill-opacity='0.08'%3E@%3C/text%3E%3C/svg%3E");
+            opacity: 0.65;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Ctext x='0' y='12' font-family='monospace' font-size='12' fill='%23ffffff' fill-opacity='0.14'%3E@%3C/text%3E%3C/svg%3E");
             background-repeat: repeat;
             will-change: transform;
         }
 
-        /* Второй слой (постоянно еле-еле заметно анимирован) */
+        /* Второй слой (постоянно анимирован) */
         .panel-bg-2 {
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
             z-index: 0;
             pointer-events: none;
-            opacity: 0.2;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Ctext x='10' y='25' font-family='monospace' font-size='10' fill='%23ffffff' fill-opacity='0.04'%3E@%3C/text%3E%3C/svg%3E");
+            opacity: 0.35;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Ctext x='10' y='25' font-family='monospace' font-size='10' fill='%23ffffff' fill-opacity='0.08'%3E@%3C/text%3E%3C/svg%3E");
             background-repeat: repeat;
             animation: bg-drift-slow 15s linear infinite alternate;
             will-change: transform;
