@@ -104,8 +104,8 @@
         }
 
         .post {
-            margin-bottom: 3rem;
-            padding-bottom: 2rem;
+            margin-bottom: 2.5rem;
+            padding-bottom: 0.8rem;
             position: relative;
         }
 
@@ -126,10 +126,30 @@
             opacity: 0.25;
         }
 
-        .post-content {
-            line-height: 1.7;
-            white-space: pre-wrap;
+        .post-header-line {
+            display: flex;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 0.6ch;
+            margin-bottom: 0.4rem;
             font-size: 1rem;
+        }
+
+        .post-date {
+            color: var(--text-primary);
+        }
+
+        .terminal-prompt {
+            color: var(--text-primary);
+            letter-spacing: 0.2ch;
+            white-space: nowrap;
+        }
+
+        .post-content {
+            line-height: 1.6;
+            white-space: pre-wrap;
+            font-size: 0.95rem;
+            color: var(--text-primary);
         }
 
         /* --- АДАПТИВ (МОБИЛЬНЫЕ УСТРОЙСТВА) --- */
@@ -148,18 +168,6 @@
                 background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20'%3E%3Ctext x='0' y='12' font-family='monospace' font-size='12' fill='%23ffffff' fill-opacity='0.08'%3E{{ page.field_char | default: '@' }}%3C/text%3E%3C/svg%3E");
                 background-repeat: repeat-x;
                 animation: scroll-field-horizontal 6s linear infinite;
-            }
-
-            .field-left::after {
-                content: "";
-                position: absolute;
-                top: 20px;
-                left: 0;
-                width: 100%;
-                height: 20px;
-                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20'%3E%3Ctext x='0' y='12' font-family='monospace' font-size='12' fill='%23ffffff' fill-opacity='0.08'%3E{{ page.field_char | default: '@' }}%3C/text%3E%3C/svg%3E");
-                background-repeat: repeat-x;
-                animation: scroll-field-horizontal-rev 8s linear infinite;
             }
 
             .logo {
@@ -196,11 +204,6 @@
         @keyframes scroll-field-horizontal {
             0% { transform: translateX(0); }
             100% { transform: translateX(-20px); }
-        }
-
-        @keyframes scroll-field-horizontal-rev {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(20px); }
         }
     </style>
 </head>
