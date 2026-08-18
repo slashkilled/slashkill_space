@@ -2,14 +2,18 @@
 layout: default
 title: "slashkill | music"
 section_title: "music"
-section_subtitle: "lyrics"
+section_subtitle: "(lyrics)"
 field_char: "♪"
 ---
 
 {% for post in site.posts %}
   {% if post.category == "music" %}
     <article class="post">
-      <div class="post-content">{{ post.date | date: "%Y.%m.%d" }} >__ {{ post.content }}</div>
+      <div class="post-header-line">
+        <span class="post-date">{{ post.date | date: "%Y.%m.%d" }}</span>
+        <span class="terminal-prompt">&gt;&#95;&#8203;&#95;</span>
+        <span class="post-content">{{ post.content }}</span>
+      </div>
     </article>
   {% endif %}
 {% endfor %}
