@@ -1,8 +1,11 @@
 backend:
   name: git-gateway
-  branch: main # ветка твоего репозитория
+  branch: main
 
 publish_mode: editorial_workflow
+
+media_folder: "assets/uploads" # Куда будут сохраняться картинки
+public_folder: "/assets/uploads" # Путь для их отображения на сайте
 
 collections:
   - name: "posts"
