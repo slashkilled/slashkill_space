@@ -295,5 +295,37 @@
         {{ content }}
     </main>
 
+    <script>
+        // Автоматическая проверка обновлений сайта в фоне
+        let lastETag = null;
+
+        async function checkSiteUpdates() {
+            try {
+                const response = await fetch(window.location.href, { 
+                    method: 'HEAD', 
+                    cache: 'no-store' 
+                });
+                
+                const currentETag = response.headers.get('etag') || response.headers.get('last-modified');
+
+                if (lastETag && currentETag && lastETag !== currentETag) {
+                    window.location.reload();
+                }
+                lastETag = currentETag;
+            } catch (e) {
+                // Игнорируем сетевые ошибки, если пропадает связь
+            }
+        }
+
+        // Проверяем каждые 2 минуты
+        setInterval(checkSiteUpdates, 120000);
+
+        // Проверяем сразу, как только пользователь возвращается во вкладку
+        document.addEventListener('visibilitychange', () => {
+            if (document.visibilityState === 'visible') {
+                checkSiteUpdates();
+            }
+        });
+    </script>
 </body>
 </html>
