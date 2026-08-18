@@ -7,15 +7,16 @@ media_folder: "assets/uploads"
 public_folder: "/assets/uploads"
 
 collections:
- - name: "posts"
+  - name: "posts"
     label: "Записи"
     folder: "_posts"
     create: true
-    # Здесь мы добавляем {{shortid}} - это добавит уникальный "хвост" к каждому файлу
+    # Жесткий шаблон: имя файла ВСЕГДА будет состоять только из даты и случайного ID. 
+    # Текст поста сюда физически не попадет, какой бы длины он ни был.
     slug: "{{year}}-{{month}}-{{day}}-{{shortid}}"
-    identifier_field: "body"
+    identifier_field: "date"
     format: "frontmatter"
     fields:
-      - {label: "Заголовок / Текст", name: "body", widget: "string"}
+      - {label: "Текст поста", name: "body", widget: "markdown"}
       - {label: "Дата", name: "date", widget: "datetime", format: "YYYY-MM-DD"}
       - {label: "Категория", name: "category", widget: "select", options: ["shitposting", "music"]}
