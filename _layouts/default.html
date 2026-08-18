@@ -129,31 +129,29 @@
 
         /* Строка поста: дата >__ текст на одной линии */
        .post-line {
-            display: flex;
-            align-items: baseline;
-            flex-wrap: wrap;
-            font-size: 0.95rem;
-            line-height: 1.5;
-            color: var(--text-primary);
-        }
+    display: block; /* Держим весь пост в блоке */
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
 
-        .post-date {
-            color: var(--text-primary);
-            margin-right: 0.6ch;
-        }
+.post-date {
+    display: inline;
+    margin-right: 0.6ch;
+}
 
-        .terminal-prompt {
-            color: var(--text-primary);
-            letter-spacing: 0.15ch; /* Защищает подчеркивания от слияния в сплошную палку */
-            margin-right: 0.8ch;
-            white-space: nowrap;
-        }
+.terminal-prompt {
+    display: inline;
+    letter-spacing: 0.15ch;
+    margin-right: 0.8ch;
+}
 
-        .post-text {
-            display: inline; /* Возвращаем inline */
-            color: var(--text-primary);
-            font-weight: 400;
-        }
+.post-text {
+    display: inline;
+    color: var(--text-primary);
+    font-weight: 400;
+}
 
         /* --- АДАПТИВ (МОБИЛЬНЫЕ УСТРОЙСТВА) --- */
         @media (max-width: 768px) {
