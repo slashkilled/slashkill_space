@@ -3,6 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Запрет жесткого кэширования, чтобы новые посты подтягивались корректно -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    
     <title>{{ page.title }}</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -23,9 +28,9 @@
             background-color: var(--bg-color);
             color: var(--text-primary);
             font-family: 'JetBrains Mono', monospace;
-            min-height: 100vh;
+            height: 100vh;
             width: 100vw;
-            overflow-x: hidden;
+            overflow: hidden; /* Отключаем общий скролл страницы, управляем блоками отдельно */
             position: relative;
             -webkit-font-smoothing: antialiased;
         }
@@ -62,30 +67,45 @@
             background-color: var(--bg-color);
         }
 
-        .field-bg {
+        /* Двуслойный анимированный фон */
+        .field-bg-1, .field-bg-2 {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20'%3E%3Ctext x='0' y='12' font-family='monospace' font-size='12' fill='%23ffffff' fill-opacity='0.08'%3E{{ page.field_char | default: '@' }}%3C/text%3E%3C/svg%3E");
             background-repeat: repeat;
-            animation: scroll-field 8s linear infinite;
             will-change: transform;
         }
 
-        /* --- ШАПКА И СЕТКА С УГОЛКОМ --- */
+        .field-bg-1 {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20'%3E%3Ctext x='0' y='12' font-family='monospace' font-size='12' fill='%23ffffff' fill-opacity='0.08'%3E{{ page.field_char | default: '@' }}%3C/text%3E%3C/svg%3E");
+            animation: scroll-field 8s linear infinite;
+        }
+
+        .field-bg-2 {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20'%3E%3Ctext x='4' y='16' font-family='monospace' font-size='10' fill='%23ffffff' fill-opacity='0.04'%3E{{ page.field_char | default: '@' }}%3C/text%3E%3C/svg%3E");
+            animation: scroll-field-reverse 12s linear infinite;
+        }
+
+        /* --- ФИКСИРОВАННАЯ ШАПКА --- */
         .page-header {
-            margin-left: 120px;
-            padding: 3rem 3rem 2rem 3rem;
+            position: fixed;
+            top: 0;
+            left: 120px;
+            right: 0;
+            height: 130px;
+            background-color: var(--bg-color);
+            padding: 2.5rem 3rem 1.5rem 3rem;
             border-bottom: 1px solid var(--divider);
             text-align: center;
+            z-index: 9;
         }
 
         .section-title {
             font-size: 2rem;
             font-weight: 700;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.3rem;
             letter-spacing: 1px;
         }
 
@@ -94,12 +114,16 @@
             color: var(--text-muted);
         }
 
-        /* --- ОСНОВНОЙ КОНТЕНТ И ПОСТЫ --- */
+        /* --- ОСНОВНОЙ КОНТЕНТ С ПРОКРУТКОЙ --- */
         .content {
-            margin-left: 120px;
+            position: absolute;
+            top: 130px;
+            left: 120px;
+            right: 0;
+            bottom: 0;
             padding: 3rem;
-            max-width: 900px;
-            position: relative;
+            max-width: 1020px;
+            overflow-y: auto; /* Скроллится только эта область */
             z-index: 2;
         }
 
@@ -126,12 +150,11 @@
             opacity: 0.25;
         }
 
-        /* Делаем всю строку гибким контейнером, который разрешает перенос слов, но держит элементы вместе */
         .post-line {
             display: flex;
             align-items: baseline;
             flex-wrap: wrap;
-            gap: 0.6ch; /* Автоматический красивый отступ между элементами */
+            gap: 0.6ch;
             font-size: 0.95rem;
             line-height: 1.5;
             color: var(--text-primary);
@@ -148,7 +171,6 @@
             white-space: nowrap;
         }
 
-        /* Убираем любые отступы у тегов p, которые генерирует markdown, и превращаем их в часть флекс-потока */
         .post-text {
             color: var(--text-primary);
             font-weight: 400;
@@ -158,6 +180,7 @@
             display: inline;
             margin: 0;
         }
+
         /* --- АДАПТИВ (МОБИЛЬНЫЕ УСТРОЙСТВА) --- */
         @media (max-width: 768px) {
             .field-left {
@@ -165,51 +188,85 @@
                 top: 0;
                 left: 0;
                 width: 100vw;
-                height: 40px;
+                height: 45px;
                 border-right: none;
                 border-bottom: 1px solid var(--divider);
             }
 
-            .field-bg {
-                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20'%3E%3Ctext x='0' y='12' font-family='monospace' font-size='12' fill='%23ffffff' fill-opacity='0.08'%3E{{ page.field_char | default: '@' }}%3C/text%3E%3C/svg%3E");
+            .field-bg-1 {
                 background-repeat: repeat-x;
-                animation: scroll-field-horizontal 6s linear infinite;
+                animation: scroll-field-horizontal-1 6s linear infinite;
+            }
+
+            .field-bg-2 {
+                background-repeat: repeat-x;
+                animation: scroll-field-horizontal-2 10s linear infinite;
             }
 
             .logo {
-                position: absolute;
-                top: 40px;
-                left: 0;
+                position: fixed;
+                top: 0;
+                left: 1rem;
                 width: auto;
+                height: 45px;
+                display: flex;
+                align-items: center;
                 padding: 0;
                 font-size: 1rem;
                 background: transparent;
+                z-index: 100;
             }
 
             .page-header {
+                position: fixed;
+                top: 45px;
+                left: 0;
+                right: 0;
+                height: 110px;
                 margin-left: 0;
-                margin-top: 40px;
-                padding: 2.5rem 1.5rem 1.5rem 1.5rem;
+                margin-top: 0;
+                padding: 1.2rem 1rem 1rem 1rem;
             }
 
             .content {
+                position: absolute;
+                top: 155px; /* 45px (полоса) + 110px (шапка) */
+                left: 0;
+                right: 0;
+                bottom: 0;
                 margin-left: 0;
-                padding: 2rem 1.5rem;
+                padding: 1.5rem 1rem;
+                overflow-y: auto;
             }
 
             .section-title {
-                font-size: 1.5rem;
+                font-size: 1.4rem;
+            }
+            
+            .section-subtitle {
+                font-size: 0.8rem;
             }
         }
 
+        /* Анимации движения фонов */
         @keyframes scroll-field {
             0% { transform: translateY(0); }
             100% { transform: translateY(-20px); }
         }
 
-        @keyframes scroll-field-horizontal {
+        @keyframes scroll-field-reverse {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(20px); }
+        }
+
+        @keyframes scroll-field-horizontal-1 {
             0% { transform: translateX(0); }
             100% { transform: translateX(-20px); }
+        }
+
+        @keyframes scroll-field-horizontal-2 {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(20px); }
         }
     </style>
 </head>
@@ -218,7 +275,8 @@
     <a href="./" class="logo">slashkill</a>
 
     <div class="field-left">
-        <div class="field-bg"></div>
+        <div class="field-bg-1"></div>
+        <div class="field-bg-2"></div>
     </div>
 
     <header class="page-header">
