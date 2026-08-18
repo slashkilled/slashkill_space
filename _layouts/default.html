@@ -105,11 +105,10 @@
 
         .post {
             margin-bottom: 2rem;
-            padding-bottom: 0.6rem;
+            padding-bottom: 1.5rem;
             position: relative;
         }
 
-        /* Пунктирная линия внизу поста */
         .post::after {
             content: "";
             position: absolute;
@@ -127,32 +126,38 @@
             opacity: 0.25;
         }
 
-        /* Строка поста: дата >__ текст на одной линии */
-       .post-line {
-    display: block; /* Держим весь пост в блоке */
-    font-size: 0.95rem;
-    line-height: 1.5;
-    color: var(--text-primary);
-    margin-bottom: 0.5rem;
-}
+        /* Делаем всю строку гибким контейнером, который разрешает перенос слов, но держит элементы вместе */
+        .post-line {
+            display: flex;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 0.6ch; /* Автоматический красивый отступ между элементами */
+            font-size: 0.95rem;
+            line-height: 1.5;
+            color: var(--text-primary);
+        }
 
-.post-date {
-    display: inline;
-    margin-right: 0.6ch;
-}
+        .post-date {
+            color: var(--text-primary);
+            white-space: nowrap;
+        }
 
-.terminal-prompt {
-    display: inline;
-    letter-spacing: 0.15ch;
-    margin-right: 0.8ch;
-}
+        .terminal-prompt {
+            color: var(--text-primary);
+            letter-spacing: 0.15ch;
+            white-space: nowrap;
+        }
 
-.post-text {
-    display: inline;
-    color: var(--text-primary);
-    font-weight: 400;
-}
+        /* Убираем любые отступы у тегов p, которые генерирует markdown, и превращаем их в часть флекс-потока */
+        .post-text {
+            color: var(--text-primary);
+            font-weight: 400;
+        }
 
+        .post-text p {
+            display: inline;
+            margin: 0;
+        }
         /* --- АДАПТИВ (МОБИЛЬНЫЕ УСТРОЙСТВА) --- */
         @media (max-width: 768px) {
             .field-left {
