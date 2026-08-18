@@ -17,7 +17,6 @@ collections:
     identifier_field: "title"
     format: "frontmatter"
     fields:
-      - {label: "Имя для файла (латиницей, например: post)", name: "title", widget: "string", default: "post"}
-      - {label: "Текст поста", name: "body", widget: "markdown"}
+      - {label: "Заголовок / Текст", name: "body", widget: "string", pattern: ["^.{1,40}$", "Максимум 40 символов для имени файла!"]}
       - {label: "Дата", name: "date", widget: "datetime", format: "YYYY-MM-DD"}
       - {label: "Категория", name: "category", widget: "select", options: ["shitposting", "music"]}
