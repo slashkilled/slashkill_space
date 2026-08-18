@@ -3,8 +3,7 @@
     <article class="post">
       <div class="post-line">
         <span class="post-date">{{ post.date | date: "%Y.%m.%d" }}</span>
-        <span class="terminal-prompt">&gt;&#95;&#8203;&#95;</span>
-        <span class="post-text">{{ post.content | remove: '<p>' | remove: '</p>' }}</span>
+        <span class="terminal-prompt">&gt;&#95;&#8203;&#95;</span><span class="post-text">{{ post.content | strip_newlines | strip }}</span>
       </div>
     </article>
   {% endif %}
