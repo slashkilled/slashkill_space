@@ -7,12 +7,12 @@ media_folder: "assets/uploads"
 public_folder: "/assets/uploads"
 
 collections:
-  - name: "posts"
+ - name: "posts"
     label: "Записи"
     folder: "_posts"
     create: true
-    # Автоматически генерируем короткий slug из даты и случайного хэша, игнорируя длину текста
-    slug: "{{year}}-{{month}}-{{day}}-post-{{slug}}"
+    # Здесь мы добавляем {{shortid}} - это добавит уникальный "хвост" к каждому файлу
+    slug: "{{year}}-{{month}}-{{day}}-{{shortid}}"
     identifier_field: "body"
     format: "frontmatter"
     fields:
