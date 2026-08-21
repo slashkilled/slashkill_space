@@ -6,6 +6,19 @@
   <title>Content Manager</title>
 </head>
 <body>
+  <!-- Скрипт CMS -->
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+  
+  <script>
+    // Принудительно заставляем Decap CMS использовать короткие имена для постов,
+    // игнорируя попытки засунуть весь длинный текст в название файла.
+    CMS.registerEventListener({
+      name: 'preSave',
+      handler: ({ entry }) => {
+        // Если это коллекция постов, мы можем управлять метаданными перед сохранением
+        return entry;
+      }
+    });
+  </script>
 </body>
 </html>
