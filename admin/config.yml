@@ -7,7 +7,7 @@ media_folder: assets/uploads
 public_folder: /assets/uploads
 
 collections:
-  - name: posts
+  - name: articles
     label: Записи
     folder: _posts
     create: true
