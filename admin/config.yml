@@ -2,6 +2,8 @@ backend:
   name: github
   repo: slashkilled/slashkill_space
   branch: main
+  base_url: "https://slashkill-space.vercel.app"
+  auth_endpoint: "/api/auth"
 
 media_folder: assets/uploads
 public_folder: /assets/uploads
