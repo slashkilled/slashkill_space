@@ -3,19 +3,19 @@ backend:
   repo: slashkilled/slashkill_space
   branch: main
 
-media_folder: "assets/uploads"
-public_folder: "/assets/uploads"
+media_folder: assets/uploads
+public_folder: /assets/uploads
 
 collections:
-  - name: "posts"
-    label: "Записи"
-    folder: "_posts"
+  - name: posts
+    label: Записи
+    folder: _posts
     create: true
-    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
-    identifier_field: "title"
-    format: "frontmatter"
+    slug: '{{year}}-{{month}}-{{day}}-{{slug}}'
+    identifier_field: title
+    format: frontmatter
     fields:
-      - {label: "Имя файла (коротко)", name: "title", widget: "string"}
+      - {label: "Имя файла", name: "title", widget: "string"}
       - {label: "Текст поста", name: "body", widget: "markdown"}
       - {label: "Дата", name: "date", widget: "datetime", format: "YYYY-MM-DD"}
       - {label: "Категория", name: "category", widget: "select", options: ["shitposting", "music"]}
