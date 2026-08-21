@@ -6,17 +6,38 @@
   <title>Content Manager</title>
 </head>
 <body>
-  <!-- Скрипт CMS -->
-  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
-  
+  <!-- Указываем CMS точный путь к конфигу -->
   <script>
-    // Принудительно заставляем Decap CMS использовать короткие имена для постов,
-    // игнорируя попытки засунуть весь длинный текст в название файла.
-    CMS.registerEventListener({
-      name: 'preSave',
-      handler: ({ entry }) => {
-        // Если это коллекция постов, мы можем управлять метаданными перед сохранением
-        return entry;
+    window.CMS_MANUAL_INIT = true;
+  </script>
+  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+  <script>
+    CMS.init({
+      config: {
+        backend: {
+          name: 'github',
+          repo: 'slashkilled/slashkill_space',
+          branch: 'main'
+        },
+        media_folder: 'assets/uploads',
+        public_folder: '/assets/uploads',
+        collections: [
+          {
+            name: 'posts',
+            label: 'Записи',
+            folder: '_posts',
+            create: true,
+            slug: '{{year}}-{{month}}-{{day}}-{{slug}}',
+            identifier_field: 'title',
+            format: 'frontmatter',
+            fields: [
+              {label: 'Название (для файла)', name: 'title', widget: 'string'},
+              {label: 'Текст поста', name: 'body', widget: 'markdown'},
+              {label: 'Дата', name: 'date', widget: 'datetime', format: 'YYYY-MM-DD'},
+              {label: 'Категория', name: 'category', widget: 'select', options: ['shitposting', 'music']}
+            ]
+          }
+        ]
       }
     });
   </script>
