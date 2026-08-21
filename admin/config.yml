@@ -2,6 +2,8 @@ backend:
   name: github
   repo: slashkilled/slashkill_space
   branch: main
+  base_url: https://decap-cms-oauth.herokuapp.com
+  auth_endpoint: auth
 
 media_folder: assets/uploads
 public_folder: /assets/uploads
