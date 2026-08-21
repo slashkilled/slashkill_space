@@ -1,6 +1,9 @@
 export default function handler(req, res) {
   const clientId = (process.env.OAUTH_CLIENT_ID || '').trim();
-  const url = `https://github.com/login/oauth/authorize?client_id=${clientId}&scope=repo%20user`;
+  const scope = encodeURIComponent('repo user');
   
-  res.redirect(url);
+  const authUrl = `https://github.com/login/oauth/authorize?client_id=${clientId}&scope=${scope}`;
+  
+  res.writeHead(302, { Location: authUrl });
+  res.end();
 }
