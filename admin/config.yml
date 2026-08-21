@@ -11,12 +11,8 @@ collections:
     label: "Записи"
     folder: "_posts"
     create: true
-    # Используем slug из поля title (которое будет коротким)
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
-    identifier_field: "title"
-    format: "frontmatter"
     fields:
-      - {label: "Имя файла (коротко, латиницей)", name: "title", widget: "string", pattern: ["^.{1,30}$", "Максимум 30 символов"]}
-      - {label: "Текст поста", name: "body", widget: "markdown"}
+      - {label: "Текст поста", name: "body", widget: "text"}
       - {label: "Дата", name: "date", widget: "datetime", format: "YYYY-MM-DD"}
       - {label: "Категория", name: "category", widget: "select", options: ["shitposting", "music"]}
