@@ -1,5 +1,7 @@
 export default async function handler(req, res) {
   const { code } = req.query;
+  const clientId = (process.env.OAUTH_CLIENT_ID || '').trim();
+  const clientSecret = (process.env.OAUTH_CLIENT_SECRET || '').trim();
 
   if (!code) {
     return res.status(400).send('No code provided');
@@ -13,8 +15,8 @@ export default async function handler(req, res) {
         'Accept': 'application/json',
       },
       body: JSON.stringify({
-        client_id: process.env.OAUTH_CLIENT_ID,
-        client_secret: process.env.OAUTH_CLIENT_SECRET,
+        client_id: clientId,
+        client_secret: clientSecret,
         code,
       }),
     });
