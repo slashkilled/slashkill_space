@@ -12,7 +12,10 @@ collections:
     folder: "_posts"
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    identifier_field: "title"
+    format: "frontmatter"
     fields:
-      - {label: "Текст поста", name: "body", widget: "text"}
+      - {label: "Имя файла (коротко)", name: "title", widget: "string"}
+      - {label: "Текст поста", name: "body", widget: "markdown"}
       - {label: "Дата", name: "date", widget: "datetime", format: "YYYY-MM-DD"}
       - {label: "Категория", name: "category", widget: "select", options: ["shitposting", "music"]}
