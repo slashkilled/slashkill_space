@@ -1,4 +1,8 @@
 export default function handler(req, res) {
-  const url = `https://github.com/login/oauth/authorize?client_id=${process.env.OAUTH_CLIENT_ID}&scope=repo%20user`;
-  res.redirect(url);
+  const params = new URLSearchParams({
+    client_id: process.env.OAUTH_CLIENT_ID,
+    scope: 'repo user',
+  });
+
+  res.redirect(`https://github.com/login/oauth/authorize?${params.toString()}`);
 }
